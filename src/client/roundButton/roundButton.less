@@ -1,0 +1,32 @@
+div.round-button {
+  position: relative;
+  display: flex;
+  flex: none;
+  width: calc(var(--size) * 1px);
+  height: calc(var(--size) * 1px);
+  margin: 10px;
+  background-color: var(--backgroundColor);
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--color);
+  flex-direction: column;
+
+  &.has-click-handler {
+    cursor: pointer;
+  }
+
+  > div.label {
+    display: flex;
+    flex: none;
+    color: var(--color);
+    opacity: 0.4;
+    font-size: 1.2em;
+  }
+
+  > div.content {
+    display: flex;
+    flex: none;
+  }
+}

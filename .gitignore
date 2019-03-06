@@ -1,0 +1,17 @@
+# NPM
+node_modules
+
+# Logs
+*.log
+
+# Caches
+.awcache
+
+# vs code
+.vscode
+
+# webpack
+dist
+
+# sensitive info
+app.config.json
