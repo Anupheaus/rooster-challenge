@@ -23,8 +23,8 @@ function storeError(setState: (value: React.SetStateAction<IState>) => void) {
   return (error: Error) => setState(state => ({ ...state, error }));
 }
 
-async function saveBenefits(id: string, benefits: IBenefit[]) {
-  return api.post('/benefits', { id, benefits });
+async function saveBenefits(currentProfileId: string, benefits: IBenefit[]) {
+  return api.post('/benefits', { currentProfileId, benefits });
 }
 
 export const Provider: FunctionComponent = ({ children }) => {

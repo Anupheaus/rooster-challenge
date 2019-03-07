@@ -1,9 +1,14 @@
-import { Router, routePrefix, route, HttpMethods } from 'anux-exchange';
+import { Router, routePrefix, route, HttpMethods, fromBody } from 'anux-exchange';
 import { IBenefit } from '../../shared/models';
 import { getDb } from '../database';
 
 interface IBenefitsRecord {
   _id: string;
+  benefits: IBenefit[];
+}
+
+interface IBenefitsPostRequest {
+  currentProfileId: string;
   benefits: IBenefit[];
 }
 
@@ -24,6 +29,14 @@ export class Benefits extends Router {
     return this.list(benefitsRecord.benefits);
   }
 
+  @route(HttpMethods.Post, '/')
+  public async post(@fromBody { currentProfileId, benefits }: IBenefitsPostRequest) {
+    const benefitsRecord = await this.getOrCreateBenefitsRecord(currentProfileId);
+    benefitsRecord.benefits = benefits;
+    await this.writeBenefitsRecord(benefitsRecord);
+    return this.ok();
+  }
+
   private async getOrCreateBenefitsRecord(id: string): Promise<IBenefitsRecord> {
     let benefitsRecord = await this.collection.findOne<IBenefitsRecord>({ _id: id });
     if (!benefitsRecord) {
@@ -37,7 +50,7 @@ export class Benefits extends Router {
   }
 
   private async writeBenefitsRecord(benefitsRecord: IBenefitsRecord) {
-    await this.collection.insertOne(benefitsRecord);
+    await this.collection.updateOne({ _id: benefitsRecord._id }, { $set: benefitsRecord }, { upsert: true });
   }
 
   //#endregion
