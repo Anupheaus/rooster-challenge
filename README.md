@@ -43,3 +43,4 @@
 * Got Wallaby running tests but would have liked to have got mocha running the tests and set up a CI process in Github when checking in.
 * Tried to get Heroku to pull from Github when master branch was updated but didn't seem to pick up on commits, perhaps they need to be from PR's rather than simple commits into branch?
 * Would have liked to have containerised this app in docker but ran out of time.
+* Would have liked to have some React testing using Enzyme.
