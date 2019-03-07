@@ -1,4 +1,4 @@
-# Rooster Money Challenge
+# RoosterMoney Challenge
 
 ### Development Technologies Used
 * [React](https://reactjs.org/) (specifically [React Hooks](https://reactjs.org/docs/hooks-overview.html))
@@ -12,9 +12,9 @@
 * [Pug](https://pugjs.org/api/getting-started.html)
 
 ### Testing Technologies Used
-* [Mocha](https://mochajs.org/)
+* [Mocha](https://mochajs.org/) (did not actually get around to using)
 * [Chai](https://www.chaijs.com/)
-* [Enzyme](https://airbnb.io/enzyme/)
+* [Enzyme](https://airbnb.io/enzyme/) (did not actually get around to using)
 
 ### Database Technologies Used
 * [MongoDB](https://www.mongodb.com/) (specifically [Atlas](https://www.mongodb.com/cloud/atlas))
@@ -30,7 +30,6 @@
 * Does not reset to 5 stars automatically on a new day, has to be manually clicked.
 * No authentication between the website and the server.
 * Client saves profiles and benefits whenever a profile is switched, need better logic to determine whether or not the profiles and benefits have changed because of a profile switch rather than being changed by the user.
-* Client webpack seems to be bundling into a single file - client.js; it is not bundling vendor code into libs.js.
 * Only tested in Chrome.
 
 ### Further Improvements
