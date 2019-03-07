@@ -68,6 +68,7 @@ module.exports = {
         parallel: true,
         terserOptions: {
           compress: true,
+          mangle: false,
           keep_classnames: true,
           keep_fnames: true,
         },
