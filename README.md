@@ -43,3 +43,16 @@
 * Tried to get Heroku to pull from Github when master branch was updated but didn't seem to pick up on commits, perhaps they need to be from PR's rather than simple commits into branch?
 * Would have liked to have containerised this app in docker but ran out of time.
 * Would have liked to have some React testing using Enzyme.
+
+### Additional Notes
+
+#### Personal Packages
+This project depends on the following personal packages:
+* anux-exchange
+  * This package provides a base class, some decorators and some helper utilities to make using Express a bit more like MVC using @route and @routePrefix decorators to identify api endpoints.
+* anux-common
+  * This package contains lots and lots of augmentations to standard objects (I know, I know, augmenting standard objects is frowned upon, but I do find them really useful!)
+* anux-react-utils
+  * This package contains some nice little helper functions for React, and I'm currently adding a number of useful custom React hooks.
+
+I apologise that these packages do not currently have many (if any) tests and are not very well documented at all.  They are almost all only very recently created and I have not yet had the time to properly add lots of tests and documentation to them.
