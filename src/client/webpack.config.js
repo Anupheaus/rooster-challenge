@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const NotifierPlugin = require('webpack-build-notifier');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const chalk = require('chalk');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const extractClientCSS = new ExtractTextPlugin({
   filename: 'client.css',
@@ -28,6 +29,20 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
   },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        terserOptions: {
+          compress: true,
+          keep_classnames: true,
+          keep_fnames: true,
+        },
+        sourceMap: true,
+      }),
+    ],
+  },
   module: {
     rules: [
       {
@@ -37,7 +52,6 @@ module.exports = {
             fallback: 'style-loader',
             use: [
               { loader: 'css-loader', query: { sourceMap: true } },
-              { loader: 'postcss-loader', query: { sourceMaps: true } },
               { loader: 'less-loader', query: { sourceMaps: true, silent: true, quiet: true } },
             ],
           }),

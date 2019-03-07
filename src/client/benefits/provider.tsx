@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useEffect, useContext } from 'react';
+import { FunctionComponent, useState, useEffect, useContext, useRef } from 'react';
 import { useBound } from 'anux-react-utils';
 import { ProfilesContext } from '../profiles';
 import api from 'axios';
@@ -19,6 +19,14 @@ async function loadBenefits(state: IState, setState: (value: React.SetStateActio
   setState({ ...state, benefits });
 }
 
+function storeError(setState: (value: React.SetStateAction<IState>) => void) {
+  return (error: Error) => setState(state => ({ ...state, error }));
+}
+
+async function saveBenefits(id: string, benefits: IBenefit[]) {
+  return api.post('/benefits', { id, benefits });
+}
+
 export const Provider: FunctionComponent = ({ children }) => {
   const { currentProfileId } = useContext(ProfilesContext);
 
@@ -33,8 +41,17 @@ export const Provider: FunctionComponent = ({ children }) => {
   const upsertBenefit = useBound((benefit: Upsertable<IBenefit>) => setState(innerState => ({ ...innerState, benefits: (innerState.benefits || []).upsert(benefit) })));
 
   useEffect(() => {
-    loadBenefits(state, setState, currentProfileId).catch((e: Error) => setState({ ...state, error: e }));
+    loadBenefits(state, setState, currentProfileId).catch(storeError(setState));
   }, [currentProfileId]);
+
+  const lastBenefits = useRef(benefits);
+
+  useEffect(() => {
+    if (benefits == null) { return; }
+    if (lastBenefits.current == null) { lastBenefits.current = benefits; return; }
+    lastBenefits.current = benefits;
+    saveBenefits(currentProfileId, benefits).catch(storeError(setState));
+  }, [benefits]);
 
   if (benefits && !error) {
     return (

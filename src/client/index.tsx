@@ -1,3 +1,4 @@
+import 'anux-common';
 import { App } from './app';
 import './index.less';
 

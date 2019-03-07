@@ -6,6 +6,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const chalk = require('chalk');
 const NodemonPlugin = require('nodemon-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const extractServerCSS = new ExtractTextPlugin({
   filename: 'server.css',
@@ -35,7 +36,6 @@ module.exports = {
             fallback: 'style-loader',
             use: [
               { loader: 'css-loader', query: { sourceMap: true } },
-              { loader: 'postcss-loader', query: { sourceMaps: true } },
               { loader: 'less-loader', query: { sourceMaps: true, silent: true, quiet: true } },
             ],
           }),
@@ -61,6 +61,20 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        terserOptions: {
+          compress: true,
+          keep_classnames: true,
+          keep_fnames: true,
+        },
+        sourceMap: true,
+      }),
+    ],
+  },
   externals: [nodeExternals()],
   plugins: [
     new webpack.ProvidePlugin({
@@ -74,7 +88,9 @@ module.exports = {
     new ProgressBarPlugin({
       format: chalk`  building {blueBright ${title}} [:bar] {green :percent}`,
     }),
-    new NodemonPlugin(),
+    new NodemonPlugin({
+      nodeArgs: []
+    }),
   ],
   node: {
     __dirname: true,

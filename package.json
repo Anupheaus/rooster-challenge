@@ -55,7 +55,6 @@
     "pug-html-loader": "^1.1.5",
     "style-loader": "^0.23.1",
     "css-loader": "^2.1.0",
-    "postcss-loader": "^3.0.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "file-loader": "^3.0.1",
@@ -75,6 +74,7 @@
     "mocha": "^6.0.2",
     "jsdom": "^13.2.0",
     "nodemon-webpack-plugin": "^4.0.7",
-    "proxyquire": "^2.1.0"
+    "proxyquire": "^2.1.0",
+    "terser-webpack-plugin": "^1.2.3"
   }
 }
