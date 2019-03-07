@@ -21,6 +21,11 @@ export interface ISettings {
   };
   services: {
     roosterApi: string;
+    mongoDb: {
+      username: string;
+      password: string;
+      dbname: string;
+    };
   };
 }
 
@@ -38,6 +43,9 @@ const settings: ISettings = {
   identity: {
     ...configSettings.identity,
   },
+  services: {
+    ...configSettings.services,
+  }
 };
 
 //#region Settings Validation

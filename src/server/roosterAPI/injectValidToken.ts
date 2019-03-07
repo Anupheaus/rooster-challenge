@@ -8,14 +8,18 @@ let lastToken: string;
 export const injectValidToken: MethodDecorator = (_target, _propertyKey, descriptor) => {
   return {
     async value(...args: any[]): Promise<any> {
+      let retryCount = 0;
       while (true) {
         try {
           const token = lastToken = lastToken || await getTokenFromApi();
-          return descriptor.value.call(_target, ...args, token);
+          return await descriptor.value.call(this, ...args, token);
         } catch (error) {
-          // tslint:disable-next-line: no-console
-          console.error(error);
-          break;
+          retryCount++;
+          if (retryCount > 1) {
+            throw error;
+          } else {
+            clearToken();
+          }
         }
       }
     },
@@ -23,3 +27,7 @@ export const injectValidToken: MethodDecorator = (_target, _propertyKey, descrip
     configurable: true,
   };
 };
+
+export function clearToken(): void {
+  lastToken = undefined;
+}
