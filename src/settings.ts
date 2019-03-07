@@ -1,4 +1,5 @@
-import * as configSettings from '../app.config.json';
+// tslint:disable-next-line: no-var-requires
+try { require('../envs.js'); } catch (e) { /* do nothing */ }
 import * as packageJson from '../package.json';
 
 export interface ISettings {
@@ -14,8 +15,6 @@ export interface ISettings {
     };
   };
   identity: {
-    firstName: string;
-    lastName: string;
     accessKey: string;
     password: string;
   };
@@ -29,39 +28,40 @@ export interface ISettings {
   };
 }
 
-const settings: ISettings = {
-  ...configSettings,
-  environment: {
-    version: packageJson.version,
-    mode: 'development',
-  },
-  server: {
-    host: 'localhost',
-    port: 9000,
-    ...configSettings.server,
-  },
-  identity: {
-    ...configSettings.identity,
-  },
-  services: {
-    ...configSettings.services,
-  }
-};
-
-//#region Settings Validation
-
-function testValue(delegate: () => boolean, errorMessage: string): void {
-  let validValue = true;
-  try {
-    validValue = delegate();
-  } catch (error) { validValue = false; }
-  if (!validValue) { throw new Error(errorMessage); }
+function getEnv<T>(variableName: string, defaultValue?: T): T {
+  const convert = (value): T =>
+    (typeof (defaultValue) === 'number' && Number.parseFloat(value))
+    || (typeof (defaultValue) === 'boolean' && value == 'true') // tslint:disable-line: triple-equals
+    || value;
+  const result = convert(process.env[variableName]);
+  if (result == null && defaultValue == null) { throw new Error(`The ${variableName} environment variable has not been set.`); }
+  return result || defaultValue;
 }
 
-testValue(() => !!configSettings.server.session.secretKey, 'The server session secret key was not set in the app.config.json file.');
-testValue(() => !!configSettings.identity.accessKey, 'The identity access key was not set in the app.config.json file.');
-testValue(() => !!configSettings.identity.password, 'The identity password was not set in the app.config.json file.');
-
-//#endregion
+const settings: ISettings = {
+  environment: {
+    version: packageJson.version,
+    mode: getEnv('MODE', 'production'),
+  },
+  server: {
+    host: getEnv('SERVER_HOST', 'localhost'),
+    port: getEnv('SERVER_PORT', 8080),
+    session: {
+      secretKey: getEnv('SESSION_KEY', Math.uniqueId()),
+    },
+  },
+  identity: {
+    accessKey: getEnv('ROOSTER_ACCESS_KEY'),
+    password: getEnv('ROOSTER_PASSWORD'),
+  },
+  services: {
+    roosterApi: getEnv('ROOSTER_API', 'https://api.roostermoney.com/v1'),
+    mongoDb: {
+      username: getEnv('MONGODB_USERNAME'),
+      password: getEnv('MONGODB_PASSWORD'),
+      dbname: getEnv('MONGODB_DBNAME'),
+    },
+  },
+};
 
 export default settings;
