@@ -39,7 +39,6 @@ export class Benefits extends Router {
 
   private async getOrCreateBenefitsRecord(id: string): Promise<IBenefitsRecord> {
     let benefitsRecord = await this.collection.findOne<IBenefitsRecord>({ _id: id });
-    console.log(benefitsRecord);
     if (!benefitsRecord) {
       benefitsRecord = {
         _id: id,
