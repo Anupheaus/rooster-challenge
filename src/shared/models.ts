@@ -34,4 +34,8 @@ export namespace IProfile {
     };
   }
 
+  export function formatName(name: string): string {
+    return name.replace(/\d/gi, '');
+  }
+
 }

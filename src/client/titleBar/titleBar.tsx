@@ -4,13 +4,10 @@ import { Profiles } from '../profiles';
 import { RoundButton } from '../roundButton';
 import Icon from '@mdi/react';
 import { mdiSettings } from '@mdi/js';
+import { IProfile } from '../../shared/models';
 
 function formatCurrency(value: number): string {
   return `£${value.toFixed(2)}`;
-}
-
-function formatName(name: string): string {
-  return name.replace(/\d/gi, '');
 }
 
 export const TitleBar: FunctionComponent = () => {
@@ -21,7 +18,7 @@ export const TitleBar: FunctionComponent = () => {
           <>
             <div className="username-container">
               <div>Reward Chart For</div>
-              <div className="username">{formatName(username)}</div>
+              <div className="username">{IProfile.formatName(username)}</div>
             </div>
             <div className="buttons">
               <RoundButton className="charity-balance" size={90} backgroundColor={'rgb(49, 103, 160)'} label="Charity">{formatCurrency(charity)}</RoundButton>

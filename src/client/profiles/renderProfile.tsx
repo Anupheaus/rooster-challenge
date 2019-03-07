@@ -18,7 +18,7 @@ export const RenderProfile: FunctionComponent<IProps> = ({ profile, onSelected }
   return (
     <div className="profile" onClick={handleClick}>
       <Icon path={mdiAccount} size={1}></Icon>
-      {username}
+      {IProfile.formatName(username)}
     </div>
   );
 };
