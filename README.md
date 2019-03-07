@@ -10,6 +10,7 @@
 * [Material Design Icons](https://materialdesignicons.com/)
 * [Less](http://lesscss.org/)
 * [Pug](https://pugjs.org/api/getting-started.html)
+* [Yarn](https://yarnpkg.com/en/)
 
 ### Api's Used
 * [RoosterMoney](https://api.roostermoney.com)
