@@ -31,7 +31,6 @@ module.exports = {
       {
         test: /\.less$/,
         use: [
-          'css-hot-loader',
           ...extractServerCSS.extract({
             fallback: 'style-loader',
             use: [

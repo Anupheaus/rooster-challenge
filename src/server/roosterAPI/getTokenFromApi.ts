@@ -1,6 +1,6 @@
-import api from 'axios';
 import settings from '../../settings';
 import { apiRequest } from './apiRequest';
+import { HttpMethods } from 'anux-exchange';
 
 interface ITokenRequest {
   accessKey: string;
@@ -14,6 +14,6 @@ interface ITokenResponse {
 export async function getTokenFromApi(): Promise<string> {
   const { identity: { accessKey, password } } = settings;
   const requestBody: ITokenRequest = { accessKey, accessPassword: password };
-  const response = await apiRequest<ITokenResponse>(api.post, `/auth`, requestBody);
+  const response = await apiRequest<ITokenResponse>(HttpMethods.Post, `/auth`, requestBody);
   return response.token;
 }

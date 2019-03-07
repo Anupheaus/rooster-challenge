@@ -1,13 +1,14 @@
-import { AxiosResponse, AxiosRequestConfig } from 'axios';
+import api from 'axios';
 import settings from '../../settings';
 import { IRoosterHeaders } from './models';
+import { HttpMethods } from 'anux-exchange';
 
-export async function apiRequest<T>(method: (url: string, data: {}, options?: AxiosRequestConfig) => Promise<AxiosResponse<T>>,
+export async function apiRequest<T>(method: HttpMethods,
   url: string, dataOrToken?: {} | string, token?: string): Promise<T> {
 
   try {
     const data = dataOrToken != null && typeof (dataOrToken) === 'object' ? dataOrToken : undefined;
-    token = dataOrToken != null && typeof (dataOrToken) === 'string' ? dataOrToken : undefined;
+    token = token || (dataOrToken != null && typeof (dataOrToken) === 'string' ? dataOrToken : undefined);
 
     const { services: { roosterApi } } = settings;
     url = `${roosterApi}${url}`;
@@ -16,14 +17,16 @@ export async function apiRequest<T>(method: (url: string, data: {}, options?: Ax
       'Content-Type': 'application/json',
       'x-access-token': token || null,
     };
-
-    const response = await method(url, data, {
+    const response = await api.request({
+      method: HttpMethods.toString(method),
+      url,
       headers,
+      data,
     });
     return response.data;
   } catch (error) {
     // tslint:disable-next-line: no-console
     console.error(error);
-    return undefined;
+    throw error;
   }
 }

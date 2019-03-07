@@ -23,8 +23,7 @@
   },
   "exclude": [
     "node_modules",
-    "dist",
-    "**/*.tests.*"
+    "dist"
   ],
   "typeAcquisition": {
     "exclude": [

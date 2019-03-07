@@ -23,26 +23,26 @@ export const Provider: FunctionComponent = ({ children }) => {
   const { currentProfileId } = useContext(ProfilesContext);
 
   const [state, setState] = useState<IState>({
-    benefits: [],
+    benefits: undefined,
     error: undefined,
   });
 
   const { benefits, error } = state;
 
-  const deleteBenefit = useBound((id: string) => setState({ ...state, benefits: benefits.removeById(id) }));
-  const upsertBenefit = useBound((benefit: Upsertable<IBenefit>) => setState({ ...state, benefits: benefits.upsert(benefit) }));
+  const deleteBenefit = useBound((id: string) => setState(innerState => ({ ...innerState, benefits: (innerState.benefits || []).removeById(id) })));
+  const upsertBenefit = useBound((benefit: Upsertable<IBenefit>) => setState(innerState => ({ ...innerState, benefits: (innerState.benefits || []).upsert(benefit) })));
 
   useEffect(() => {
     loadBenefits(state, setState, currentProfileId).catch((e: Error) => setState({ ...state, error: e }));
   }, [currentProfileId]);
 
-  if (benefits.length > 0 && !error) {
+  if (benefits && !error) {
     return (
       <BenefitsContext.Provider value={{ ...state, deleteBenefit, upsertBenefit }}>
         {children || null}
       </BenefitsContext.Provider>
     );
-  } else if (benefits.length === 0 && !error) {
+  } else if (!benefits && !error) {
     return (
       <div>loading...</div>
     );

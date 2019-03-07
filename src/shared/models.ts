@@ -1,3 +1,5 @@
+import { IRoosterBalance } from '../server/roosterAPI/models';
+
 export interface IProfile {
   id: string;
   username: string;
@@ -14,4 +16,22 @@ export interface IBenefit {
   id: string;
   title: string;
   numberOfStars: number;
+}
+
+export namespace IProfile {
+
+  export function fromBalance({ childUsername, charityPotBalance, goalBalance, savingsBalance, totalBalance, walletBalance }: IRoosterBalance): IProfile {
+    return {
+      id: childUsername,
+      balances: {
+        charity: charityPotBalance,
+        goal: goalBalance,
+        savings: savingsBalance,
+        total: totalBalance,
+        wallet: walletBalance,
+      },
+      username: childUsername,
+    };
+  }
+
 }

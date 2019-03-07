@@ -5,8 +5,11 @@ import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import * as path from 'path';
 import * as routes from '../routes';
+import { connectToDatabase } from '../database';
 
-export function initialiseServer() {
+export async function initialiseServer() {
+
+  await connectToDatabase();
 
   const app = express();
 
