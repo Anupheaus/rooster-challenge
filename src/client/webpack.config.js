@@ -42,6 +42,16 @@ module.exports = {
         sourceMap: true,
       }),
     ],
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: 'initial',
+          name: 'libs',
+          test: /node_modules/,
+          enforce: true,
+        },
+      }
+    },
   },
   module: {
     rules: [
