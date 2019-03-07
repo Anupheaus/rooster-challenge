@@ -11,13 +11,16 @@
 * [Less](http://lesscss.org/)
 * [Pug](https://pugjs.org/api/getting-started.html)
 
+### Api's Used
+* [RoosterMoney](https://api.roostermoney.com)
+
+### Database Technologies Used
+* [MongoDB](https://www.mongodb.com/) (specifically [Atlas](https://www.mongodb.com/cloud/atlas))
+
 ### Testing Technologies Used
 * [Mocha](https://mochajs.org/) (did not actually get around to using)
 * [Chai](https://www.chaijs.com/)
 * [Enzyme](https://airbnb.io/enzyme/) (did not actually get around to using)
-
-### Database Technologies Used
-* [MongoDB](https://www.mongodb.com/) (specifically [Atlas](https://www.mongodb.com/cloud/atlas))
 
 ### Source Control Technologies Used
 * [Github](https://github.com/)
