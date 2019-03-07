@@ -35,7 +35,7 @@ class TestClass {
   public async testFailOnceMethod(token?: string) {
     this._failCount++;
     if (this._failCount === 2) { return token; }
-    throw new Error('oops');
+    throw new Error('Failed!');
   }
 
 }
