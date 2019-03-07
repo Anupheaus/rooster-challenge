@@ -44,8 +44,8 @@ const settings: ISettings = {
     mode: getEnv('MODE', 'production'),
   },
   server: {
-    host: getEnv('SERVER_HOST', 'localhost'),
-    port: getEnv('SERVER_PORT', 8080),
+    host: getEnv('HOST', 'localhost'),
+    port: getEnv('PORT', 8080),
     session: {
       secretKey: getEnv('SESSION_KEY', Math.uniqueId()),
     },
